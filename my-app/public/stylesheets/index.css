@@ -1,0 +1,179 @@
+/* ==================== NIKE HOME PAGE ==================== */
+
+/* 1. Hero Banner */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.5)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-text h1 {
+  font-size: 82px;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+/* 2. Promo Section */
+.promo-section {
+  padding: 90px 20px;
+  background-color: #ffffff;
+}
+
+.promo-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.promo-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.promo-card:hover {
+  transform: translateY(-8px);
+}
+
+.promo-image {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.promo-info {
+  padding: 32px;
+}
+
+.promo-info h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111111;
+}
+
+.promo-info p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #555555;
+}
+
+/* 3. Categories Section */
+.categories-section {
+  padding: 70px 20px 90px;
+  background-color: #f8f8f8;
+}
+
+.section-title h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #111;
+  margin-bottom: 50px;
+}
+
+.categories-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+}
+
+.category-card {
+  position: relative;
+  height: 440px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.category-card:hover img {
+  transform: scale(1.07);
+}
+
+.category-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 30px 35px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  color: white;
+}
+
+.category-overlay h3 {
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.category-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-overlay li {
+  font-size: 15.2px;
+  margin-bottom: 7px;
+  opacity: 0.95;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .promo-container {
+    grid-template-columns: 1fr;
+  }
+  .hero-text h1 {
+    font-size: 62px;
+    letter-spacing: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-banner {
+    height: 480px;
+  }
+  .hero-text h1 {
+    font-size: 48px;
+  }
+}

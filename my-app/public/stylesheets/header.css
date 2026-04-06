@@ -1,0 +1,255 @@
+/* ==================== NIKE HEADER ==================== */
+
+.nike-header {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+.top-bar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-bar-right {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.top-link {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+
+.top-link:hover {
+  opacity: 0.85;
+}
+
+.icon {
+  font-size: 15px;
+}
+
+/* Main Header */
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+  padding: 20px 0;
+}
+
+.main-header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Nike Logo */
+.nike-logo {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  color: #111111;
+  text-transform: uppercase;
+}
+
+/* Main Menu */
+.main-menu ul {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-link {
+  color: #111111;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.menu-link:hover {
+  color: #e30613; /* Màu đỏ Nike đặc trưng */
+}
+
+.arrow {
+  font-size: 10px;
+  margin-left: 3px;
+}
+
+/* Search Box */
+.search-box {
+  width: 300px;
+}
+
+.search-inner {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 48px 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  border-color: #111111;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
+}
+
+.search-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #666666;
+}
+
+.search-icon {
+  font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .main-menu ul {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-header-container {
+    flex-direction: column;
+    gap: 18px;
+    padding: 16px 20px;
+  }
+
+  .main-menu ul {
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .nike-logo {
+    font-size: 34px;
+  }
+}
+/* ==================== DROPDOWN MENU ==================== */
+
+.has-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1f1f1f;
+  min-width: 900px;
+  padding: 40px 30px 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-top: 4px solid #e30613;
+}
+
+.has-dropdown:hover .dropdown-menu {
+  display: flex;
+  gap: 60px;
+}
+
+.dropdown-column {
+  flex: 1;
+  min-width: 220px;
+}
+
+.dropdown-column h4 {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  gap: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.dropdown-column li {
+  margin-bottom: 10px;
+}
+
+.dropdown-column a {
+  color: #cccccc;
+  text-decoration: none;
+  font-size: 14.5px;
+  transition: color 0.2s;
+}
+
+.dropdown-column a:hover {
+  color: #ffffff;
+}
+
+/* Highlight khi active (NAM hoặc NỮ) */
+.menu-item.active .menu-link {
+  color: #e30613;
+}
+
+/* Responsive cho dropdown */
+@media (max-width: 1024px) {
+  .dropdown-menu {
+    min-width: 700px;
+    padding: 30px 20px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    min-width: 100%;
+    box-shadow: none;
+    padding: 20px;
+    display: none; /* Có thể bật bằng JS nếu cần */
+  }
+}

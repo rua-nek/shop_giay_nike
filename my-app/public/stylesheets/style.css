@@ -1,8 +1,126 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #111111;
+  margin: 0;
+  padding: 0;
 }
 
+/* Reset & định dạng chung */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Xóa gạch chân link mặc định */
 a {
-  color: #00B7FF;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: #111111;
+}
+
+/* Danh sách - xóa chấm đầu dòng và cách lề mặc định */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cách lề và khoảng cách chung cho các khối */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 16px 0;
+}
+
+/* Heading */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  color: #111111;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+/* Màu chữ các mức độ */
+.text-primary {
+  color: #111111;
+}
+.text-secondary {
+  color: #666666;
+}
+.text-light {
+  color: #757575;
+}
+.text-muted {
+  color: #999999;
+}
+
+/* Font weight */
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* Kích thước chữ phổ biến */
+.text-xs {
+  font-size: 12px;
+}
+.text-sm {
+  font-size: 14px;
+}
+.text-base {
+  font-size: 16px;
+}
+.text-lg {
+  font-size: 18px;
+}
+
+/* Khoảng cách lề tiện dụng */
+.mt-1 {
+  margin-top: 4px;
+}
+.mt-2 {
+  margin-top: 8px;
+}
+.mt-3 {
+  margin-top: 12px;
+}
+.mt-4 {
+  margin-top: 16px;
+}
+.mt-5 {
+  margin-top: 24px;
+}
+.mb-4 {
+  margin-bottom: 16px;
+}
+.mb-5 {
+  margin-bottom: 24px;
 }
