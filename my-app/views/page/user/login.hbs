@@ -1,0 +1,294 @@
+{{! views/login.hbs }}
+
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - Shop Giày Nike</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+        background: linear-gradient(145deg, #f5f7fa 0%, #e9ecf2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      .login-card {
+        background: #ffffff;
+        max-width: 420px;
+        width: 100%;
+        padding: 2.5rem 2rem;
+        border-radius: 32px;
+        box-shadow:
+          0 20px 40px -10px rgba(0, 0, 0, 0.12),
+          0 8px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease;
+      }
+
+      .login-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .logo svg {
+        width: 60px;
+        height: auto;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #1a1e2b;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+      }
+
+      .subhead {
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        font-size: 1.1rem;
+        pointer-events: none;
+      }
+
+      .input-icon input {
+        width: 100%;
+        padding: 0.9rem 1rem 0.9rem 2.8rem;
+        font-size: 1rem;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 18px;
+        background: #fafbfc;
+        transition: all 0.2s;
+        outline: none;
+      }
+
+      .input-icon input:focus {
+        border-color: #111;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.03);
+      }
+
+      .input-icon input::placeholder {
+        color: #b0b8c5;
+        font-weight: 400;
+      }
+
+      .forgot-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.8rem;
+      }
+
+      .forgot-link {
+        font-size: 0.9rem;
+        color: #4b5563;
+        text-decoration: none;
+        border-bottom: 1px dashed #cbd5e1;
+        transition: color 0.15s;
+      }
+
+      .forgot-link:hover {
+        color: #000;
+        border-bottom-color: #000;
+      }
+
+      .btn-login {
+        width: 100%;
+        background: #111827;
+        color: white;
+        font-weight: 600;
+        font-size: 1.05rem;
+        padding: 0.95rem 1.5rem;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(17, 24, 39, 0.2);
+        transition: all 0.25s;
+        letter-spacing: 0.3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .btn-login:hover {
+        background: #000;
+        transform: scale(1.01);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+      }
+
+      .register-redirect {
+        text-align: center;
+        margin-top: 1.8rem;
+        color: #4b5563;
+        font-size: 0.95rem;
+      }
+
+      .register-redirect a {
+        color: #111827;
+        font-weight: 700;
+        text-decoration: none;
+        margin-left: 6px;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.2s;
+      }
+
+      .register-redirect a:hover {
+        border-bottom-color: #111827;
+      }
+
+      .error-message {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 0.8rem 1rem;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid #dc2626;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Icon đơn giản dùng Unicode / text fallback */
+      .icon-symbol {
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+
+      /* Responsive nhỏ */
+      @media (max-width: 480px) {
+        .login-card {
+          padding: 2rem 1.5rem;
+        }
+        h1 {
+          font-size: 1.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <div class="logo">
+        <!-- Logo Nike đơn giản bằng SVG -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+            fill="#111827"
+          />
+          <path
+            d="M21.5 9L9.5 17.5L5 13"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <h1>Đăng nhập</h1>
+      <div class="subhead">Chào mừng trở lại với Nike Store</div>
+
+      {{#if error}}
+        <div class="error-message">
+          <span class="icon-symbol">⚠️</span>
+          <span>{{error}}</span>
+        </div>
+      {{/if}}
+
+      <form action="/users/login" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-icon">
+            <i>📧</i>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@email.com"
+              value="{{oldEmail}}"
+              required
+              autofocus
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <div class="input-icon">
+            <i>🔒</i>
+            <input
+              type="password"
+              id="password"
+              name="mat_khau"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="forgot-row">
+          <a href="#" class="forgot-link">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="btn-login">
+          <span>Đăng nhập</span>
+          <span style="font-size:1.2rem;">→</span>
+        </button>
+
+        <div class="register-redirect">
+          Chưa có tài khoản?
+          <a href="/users/register">Tạo tài khoản mới</a>
+        </div>
+      </form>
+    </div>
+
+    {{! JavaScript nhỏ để tự động focus và giữ placeholder }}
+    <script>
+      // Đảm bảo email được focus khi trang load window.onload = function() {
+      const emailInput = document.getElementById('email'); if (emailInput) {
+      emailInput.focus(); // Đưa con trỏ về cuối nếu có value cũ if
+      (emailInput.value.length > 0) {
+      emailInput.setSelectionRange(emailInput.value.length,
+      emailInput.value.length); } } };
+    </script>
+  </body>
+</html>

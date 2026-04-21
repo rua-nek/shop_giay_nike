@@ -8,8 +8,8 @@ var mongoose = require("mongoose"); // thêm
 
 var app = express();
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var mainRouter = require("./routes/main");
+app.use("/", mainRouter);
 
 // ===== KẾT NỐI MONGODB =====
 mongoose
@@ -27,10 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
