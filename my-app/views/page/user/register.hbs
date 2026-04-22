@@ -1,10 +1,10 @@
-{{! views/login.hbs }}
+{{! views/register.hbs }}
 
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập - Shop Giày Nike</title>
+    <title>Đăng ký - Shop Giày Nike</title>
     <style>
       * {
         margin: 0;
@@ -22,9 +22,9 @@
         padding: 1.5rem;
       }
 
-      .login-card {
+      .register-card {
         background: #ffffff;
-        max-width: 420px;
+        max-width: 480px;
         width: 100%;
         padding: 2.5rem 2rem;
         border-radius: 32px;
@@ -34,17 +34,17 @@
         transition: transform 0.2s ease;
       }
 
-      .login-card:hover {
+      .register-card:hover {
         transform: translateY(-3px);
       }
 
       .logo {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
       }
 
       .logo svg {
-        width: 60px;
+        width: 50px;
         height: auto;
       }
 
@@ -61,11 +61,11 @@
         text-align: center;
         color: #6b7280;
         font-size: 0.95rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.8rem;
       }
 
       .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.2rem;
       }
 
       label {
@@ -73,7 +73,7 @@
         font-size: 0.9rem;
         font-weight: 600;
         color: #2c3e50;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
       }
 
       .input-icon {
@@ -92,7 +92,7 @@
 
       .input-icon input {
         width: 100%;
-        padding: 0.9rem 1rem 0.9rem 2.8rem;
+        padding: 0.85rem 1rem 0.85rem 2.8rem;
         font-size: 1rem;
         border: 1.5px solid #e2e8f0;
         border-radius: 18px;
@@ -112,26 +112,17 @@
         font-weight: 400;
       }
 
-      .forgot-row {
+      /* Hàng hai cột cho số điện thoại và địa chỉ (tùy chọn) */
+      .form-row {
         display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1.8rem;
+        gap: 0.8rem;
       }
 
-      .forgot-link {
-        font-size: 0.9rem;
-        color: #4b5563;
-        text-decoration: none;
-        border-bottom: 1px dashed #cbd5e1;
-        transition: color 0.15s;
+      .form-row .form-group {
+        flex: 1;
       }
 
-      .forgot-link:hover {
-        color: #000;
-        border-bottom-color: #000;
-      }
-
-      .btn-login {
+      .btn-register {
         width: 100%;
         background: #111827;
         color: white;
@@ -148,22 +139,23 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        margin-top: 1.8rem;
       }
 
-      .btn-login:hover {
+      .btn-register:hover {
         background: #000;
         transform: scale(1.01);
         box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
       }
 
-      .register-redirect {
+      .login-redirect {
         text-align: center;
         margin-top: 1.8rem;
         color: #4b5563;
         font-size: 0.95rem;
       }
 
-      .register-redirect a {
+      .login-redirect a {
         color: #111827;
         font-weight: 700;
         text-decoration: none;
@@ -172,7 +164,7 @@
         transition: border-color 0.2s;
       }
 
-      .register-redirect a:hover {
+      .login-redirect a:hover {
         border-bottom-color: #111827;
       }
 
@@ -189,35 +181,35 @@
         gap: 10px;
       }
 
-      /* Icon đơn giản dùng Unicode / text fallback */
+      .field-error {
+        color: #dc2626;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        margin-left: 0.5rem;
+      }
+
       .icon-symbol {
         font-size: 1.2rem;
         line-height: 1;
       }
 
-      /* Responsive nhỏ */
       @media (max-width: 480px) {
-        .login-card {
+        .register-card {
           padding: 2rem 1.5rem;
         }
         h1 {
           font-size: 1.7rem;
         }
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
       }
     </style>
   </head>
-  {{#if successMessage}}
-    <div
-      style="background: #d1fae5; color: #065f46; padding: 0.8rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center;"
-    >
-      ✅
-      {{successMessage}}
-    </div>
-  {{/if}}
   <body>
-    <div class="login-card">
+    <div class="register-card">
       <div class="logo">
-        <!-- Logo Nike đơn giản bằng SVG -->
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
@@ -232,8 +224,8 @@
           />
         </svg>
       </div>
-      <h1>Đăng nhập</h1>
-      <div class="subhead">Chào mừng trở lại với Nike Store</div>
+      <h1>Đăng ký</h1>
+      <div class="subhead">Tạo tài khoản để mua sắm dễ dàng hơn</div>
 
       {{#if error}}
         <div class="error-message">
@@ -242,9 +234,31 @@
         </div>
       {{/if}}
 
-      <form action="/user/login" method="POST">
+      <form action="/user/register" method="POST">
+        {{! Họ tên }}
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="ho_ten">Họ và tên
+            <span style="color:#dc2626;">*</span></label>
+          <div class="input-icon">
+            <i>👤</i>
+            <input
+              type="text"
+              id="ho_ten"
+              name="ho_ten"
+              placeholder="Nguyễn Văn A"
+              value="{{oldData.ho_ten}}"
+              required
+              autofocus
+            />
+          </div>
+          {{#if errors.ho_ten}}<div
+              class="field-error"
+            >{{errors.ho_ten}}</div>{{/if}}
+        </div>
+
+        {{! Email }}
+        <div class="form-group">
+          <label for="email">Email <span style="color:#dc2626;">*</span></label>
           <div class="input-icon">
             <i>📧</i>
             <input
@@ -252,51 +266,101 @@
               id="email"
               name="email"
               placeholder="example@email.com"
-              value="{{oldEmail}}"
-              required
-              autofocus
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Mật khẩu</label>
-          <div class="input-icon">
-            <i>🔒</i>
-            <input
-              type="password"
-              id="password"
-              name="mat_khau"
-              placeholder="••••••••"
+              value="{{oldData.email}}"
               required
             />
           </div>
+          {{#if errors.email}}<div
+              class="field-error"
+            >{{errors.email}}</div>{{/if}}
         </div>
 
-        <div class="forgot-row">
-          <a href="#" class="forgot-link">Quên mật khẩu?</a>
+        {{! Mật khẩu và Xác nhận mật khẩu (2 cột) }}
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mat_khau">Mật khẩu
+              <span style="color:#dc2626;">*</span></label>
+            <div class="input-icon">
+              <i>🔒</i>
+              <input
+                type="password"
+                id="mat_khau"
+                name="mat_khau"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            {{#if errors.mat_khau}}<div
+                class="field-error"
+              >{{errors.mat_khau}}</div>{{/if}}
+          </div>
+          <div class="form-group">
+            <label for="xac_nhan_mat_khau">Xác nhận MK
+              <span style="color:#dc2626;">*</span></label>
+            <div class="input-icon">
+              <i>🔐</i>
+              <input
+                type="password"
+                id="xac_nhan_mat_khau"
+                name="xac_nhan_mat_khau"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        {{#if errors.xac_nhan_mat_khau}}<div
+            class="field-error"
+          >{{errors.xac_nhan_mat_khau}}</div>{{/if}}
+
+        {{! Số điện thoại và Địa chỉ (2 cột, không bắt buộc) }}
+        <div class="form-row">
+          <div class="form-group">
+            <label for="so_dien_thoai">Số điện thoại</label>
+            <div class="input-icon">
+              <i>📱</i>
+              <input
+                type="tel"
+                id="so_dien_thoai"
+                name="so_dien_thoai"
+                placeholder="0912345678"
+                value="{{oldData.so_dien_thoai}}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dia_chi">Địa chỉ</label>
+            <div class="input-icon">
+              <i>🏠</i>
+              <input
+                type="text"
+                id="dia_chi"
+                name="dia_chi"
+                placeholder="Số nhà, đường, thành phố"
+                value="{{oldData.dia_chi}}"
+              />
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="btn-login">
-          <span>Đăng nhập</span>
+        <button type="submit" class="btn-register">
+          <span>Đăng ký</span>
           <span style="font-size:1.2rem;">→</span>
         </button>
 
-        <div class="register-redirect">
-          Chưa có tài khoản?
-          <a href="/user/register">Tạo tài khoản mới</a>
+        <div class="login-redirect">
+          Đã có tài khoản?
+          <a href="/user/login">Đăng nhập ngay</a>
         </div>
       </form>
     </div>
 
-    {{! JavaScript nhỏ để tự động focus và giữ placeholder }}
     <script>
-      // Đảm bảo email được focus khi trang load window.onload = function() {
-      const emailInput = document.getElementById('email'); if (emailInput) {
-      emailInput.focus(); // Đưa con trỏ về cuối nếu có value cũ if
-      (emailInput.value.length > 0) {
-      emailInput.setSelectionRange(emailInput.value.length,
-      emailInput.value.length); } } };
+      window.onload = function() { const nameInput =
+      document.getElementById('ho_ten'); if (nameInput) { nameInput.focus(); if
+      (nameInput.value.length > 0) {
+      nameInput.setSelectionRange(nameInput.value.length,
+      nameInput.value.length); } } };
     </script>
   </body>
 </html>
