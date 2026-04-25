@@ -1,0 +1,79 @@
+{{! Sidebar lọc sản phẩm }}
+<aside class="product-sidebar">
+  <!-- Danh mục sản phẩm -->
+  <div class="filter-block">
+    <h3 class="filter-title">Danh mục</h3>
+    <ul class="filter-list">
+      <li><a href="#">Skateboard</a></li>
+      <li><a href="#">Top</a></li>
+      <li><a href="#">Nửa trên</a></li>
+    </ul>
+  </div>
+
+  <!-- Trạng thái -->
+  <div class="filter-block">
+    <h3 class="filter-title">Trạng thái</h3>
+    <ul class="filter-list">
+      <li><a href="#">Limited Edition</a></li>
+      <li><a href="#">Online Only</a></li>
+      <li><a href="#">Sale off</a></li>
+      <li><a href="#">New Arrival</a></li>
+    </ul>
+  </div>
+</aside>
+
+{{! CSS cho sidebar (có thể chuyển ra file riêng nếu muốn) }}
+<style>
+  .product-sidebar {
+    width: 260px;
+    padding: 20px 15px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+  }
+
+  .filter-block {
+    margin-bottom: 30px;
+  }
+
+  .filter-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #111;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .filter-list li {
+    margin-bottom: 10px;
+  }
+
+  .filter-list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.9rem;
+    transition: color 0.15s;
+    display: block;
+  }
+
+  .filter-list li a:hover {
+    color: #111;
+    font-weight: 500;
+  }
+
+  /* Responsive: khi màn hình nhỏ, sidebar có thể chuyển thành hàng ngang hoặc ẩn (tùy bạn) */
+  @media (max-width: 768px) {
+    .product-sidebar {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+</style>

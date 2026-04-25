@@ -16,9 +16,28 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // ===== CẤU HÌNH VIEW ENGINE =====
-app.set("views", path.join(__dirname, "views"));
-app.engine("hbs", engine({ extname: ".hbs" }));
+const hbsHelpers = {
+  formatCurrency: function (value) {
+    if (typeof value !== "number") return value;
+    return value.toLocaleString("vi-VN") + " ₫";
+  },
+  eq: function (a, b) {
+    return a === b;
+  },
+  json: function (context) {
+    return JSON.stringify(context);
+  },
+};
+
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    helpers: hbsHelpers,
+  }),
+);
 app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
 
 // ===== MIDDLEWARE CƠ BẢN =====
 app.use(logger("dev"));
@@ -53,12 +72,16 @@ app.use(function (req, res, next) {
 });
 
 // ===== ERROR HANDLER =====
+// app.js - Thay thế error handler cũ bằng đoạn này để debug
 app.use(function (err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  // In lỗi ra console
+  console.error("🔥 ERROR STACK:", err.stack);
 
-  res.status(err.status || 500);
-  res.render("error");
+  // Hiển thị lỗi chi tiết ra trình duyệt (CHỈ DÙNG KHI DEV)
+  res.status(500).send(`
+    <h1>Lỗi 500</h1>
+    <pre>${err.stack || err.message}</pre>
+  `);
 });
 
 module.exports = app;

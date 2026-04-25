@@ -1,0 +1,496 @@
+{{! views/page/product/detail.hbs }}
+<link rel="stylesheet" href="/stylesheets/header.css" />
+<link rel="stylesheet" href="/stylesheets/footer.css" />
+<link rel="stylesheet" href="/stylesheets/style.css" />
+
+{{> header }}
+
+<style>
+  .product-detail-wrapper {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+  .product-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 30px;
+  }
+  .product-image {
+    flex: 1 1 45%;
+    text-align: center;
+  }
+  .product-image img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+  }
+  .product-content {
+    flex: 1 1 50%;
+  }
+  .product-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .product-code {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .product-status {
+    background: #e63946;
+    color: white;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .price-section { margin: 1rem 0; }
+  .original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  .sale-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e63946;
+  }
+  .current-price { font-size: 1.8rem; font-weight: 700; }
+  .selector-group {
+    display: flex;
+    gap: 30px;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+  }
+  .size-selector, .quantity-selector {
+    flex: 1;
+    min-width: 150px;
+  }
+  .label {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+  /* Dropdown chung */
+  .dropdown-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+  }
+  .dropdown-display {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+  }
+  .dropdown-display:hover:not(.disabled) {
+    border-color: #111;
+  }
+  .dropdown-display.disabled {
+    background: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  .dropdown-options-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 5px;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .dropdown-options-panel.active {
+    display: grid;
+  }
+  .dropdown-opt {
+    padding: 10px 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+    font-size: 0.9rem;
+    background: white;
+  }
+  .dropdown-opt.available {
+    border-color: #111;
+    color: #111;
+  }
+  .dropdown-opt.available:hover {
+    background: #111;
+    color: white;
+  }
+  .dropdown-opt.unavailable {
+    color: #b0b0b0;
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+  .dropdown-opt.selected {
+    background: #111;
+    color: white;
+    border-color: #111;
+  }
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 1.5rem 0;
+  }
+  .btn-add-cart, .btn-checkout {
+    flex: 1;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-add-cart {
+    background: #111;
+    color: white;
+  }
+  .btn-add-cart:hover:not(:disabled) { background: #000; }
+  .btn-checkout {
+    background: white;
+    color: #111;
+    border: 2px solid #111;
+  }
+  .btn-checkout:hover:not(:disabled) {
+    background: #111;
+    color: white;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .product-description {
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+  }
+  .desc-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
+  .desc-content { line-height: 1.6; color: #444; font-size: 0.95rem; }
+  @media (max-width: 768px) {
+    .product-detail { flex-direction: column; }
+    .action-buttons { flex-direction: column; }
+  }
+</style>
+
+<div class="product-detail-wrapper">
+  <div class="product-detail">
+    <!-- Ảnh -->
+    <div class="product-image">
+      <img src="{{product.anh_chinh}}" alt="{{product.ten_san_pham}}">
+    </div>
+
+    <!-- Chi tiết -->
+    <div class="product-content">
+      <h1 class="product-name">{{product.ten_san_pham}}</h1>
+      <div class="product-code">Mã sản phẩm: {{product.slug}}</div>
+      {{#if product.gia_khuyen_mai}}
+        <span class="product-status">Sale off</span>
+      {{/if}}
+
+      <div class="price-section">
+        {{#if product.gia_khuyen_mai}}
+          <span class="original-price">{{formatCurrency product.gia_goc}}</span>
+          <span class="sale-price">{{formatCurrency product.gia_khuyen_mai}}</span>
+        {{else}}
+          <span class="current-price">{{formatCurrency product.gia_goc}}</span>
+        {{/if}}
+      </div>
+
+      <!-- Chọn size + số lượng -->
+      <div class="selector-group">
+        <!-- Size -->
+        <div class="size-selector">
+          <div class="label">SIZE</div>
+          <div class="dropdown-wrapper" id="sizeDropdownWrapper">
+            <div class="dropdown-display" id="sizeDisplay">
+              <span id="selectedSizeText">Chọn size</span>
+              <span>▾</span>
+            </div>
+            <div class="dropdown-options-panel" id="sizePanel">
+              <!-- JS render -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Số lượng -->
+        <div class="quantity-selector">
+          <div class="label">SỐ LƯỢNG</div>
+          <div class="dropdown-wrapper" id="qtyDropdownWrapper">
+            <div class="dropdown-display disabled" id="qtyDisplay">
+              <span id="selectedQtyText">Chọn số lượng</span>
+              <span>▾</span>
+            </div>
+            <div class="dropdown-options-panel" id="qtyPanel">
+              <!-- JS render -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nút hành động -->
+      <div class="action-buttons">
+        <button class="btn-add-cart" id="addToCartBtn" disabled>THÊM VÀO GIỎ HÀNG</button>
+        <button class="btn-checkout" id="checkoutBtn" disabled>THANH TOÁN</button>
+      </div>
+
+      <!-- Thông tin sản phẩm -->
+      <div class="product-description">
+        <div class="desc-title" id="descToggle">
+          THÔNG TIN SẢN PHẨM
+          <span>▼</span>
+        </div>
+        <div class="desc-content" id="descContent">
+          <p>{{product.mo_ta}}</p>
+          {{#if product.thuong_hieu}}
+            <p><strong>Thương hiệu:</strong> {{product.thuong_hieu.ten_thuong_hieu}}</p>
+          {{/if}}
+          {{#if product.danh_muc}}
+            <p><strong>Danh mục:</strong> {{product.danh_muc.ten_danh_muc}}</p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> footer }}
+
+{{! Nhúng dữ liệu biến thể và slug }}
+<script>
+  window.productVariants = {{{json product.bien_the}}};
+  window.productSlug = "{{product.slug}}";
+</script>
+
+<script>
+  (function() {
+    // --- Size dropdown ---
+    const sizeDisplay = document.getElementById('sizeDisplay');
+    const sizePanel = document.getElementById('sizePanel');
+    const selectedSizeText = document.getElementById('selectedSizeText');
+    let selectedSizeData = null;
+
+    // --- Qty dropdown ---
+    const qtyDisplay = document.getElementById('qtyDisplay');
+    const qtyPanel = document.getElementById('qtyPanel');
+    const selectedQtyText = document.getElementById('selectedQtyText');
+    let selectedQuantity = null;
+
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    // ========== XÂY DỰNG SIZE PANEL ==========
+    const variants = window.productVariants || [];
+    const variantMap = {};
+    variants.forEach(v => { variantMap[v.size] = v; });
+
+    sizePanel.innerHTML = '';
+    for (let size = 35; size <= 46; size++) {
+      const opt = document.createElement('div');
+      opt.className = 'dropdown-opt';
+      opt.textContent = size;
+      const variant = variantMap[size];
+      if (!variant || variant.ton_kho <= 0) {
+        opt.classList.add('unavailable');
+      } else {
+        opt.classList.add('available');
+        opt.dataset.size = size;
+        opt.dataset.sku = variant.sku;
+        opt.dataset.stock = variant.ton_kho;
+        opt.dataset.price = variant.gia;
+
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          document.querySelectorAll('#sizePanel .dropdown-opt.selected').forEach(el => el.classList.remove('selected'));
+          this.classList.add('selected');
+
+          selectedSizeData = {
+            size: this.dataset.size,
+            sku: this.dataset.sku,
+            stock: parseInt(this.dataset.stock),
+            price: this.dataset.price
+          };
+
+          selectedSizeText.textContent = `Size: ${this.dataset.size}`;
+          sizePanel.classList.remove('active');
+
+          // Kích hoạt số lượng
+          enableQuantityDropdown(selectedSizeData.stock);
+          // Reset số lượng
+          resetQuantity();
+          // Kích hoạt nút mua hàng (khi đã chọn size & số lượng)
+          updateActionButtons();
+        });
+      }
+      sizePanel.appendChild(opt);
+    }
+
+    // Toggle size panel
+    sizeDisplay.addEventListener('click', function(e) {
+      e.stopPropagation();
+      sizePanel.classList.toggle('active');
+      // Đóng qty panel nếu đang mở
+      qtyPanel.classList.remove('active');
+    });
+
+    // ========== XÂY DỰNG QTY PANEL ==========
+    function enableQuantityDropdown(maxStock) {
+      qtyDisplay.classList.remove('disabled');
+      qtyPanel.innerHTML = '';
+      const maxQty = Math.min(maxStock, 12);
+      for (let qty = 1; qty <= 12; qty++) {
+        const opt = document.createElement('div');
+        opt.className = 'dropdown-opt';
+        opt.textContent = qty;
+        if (qty > maxStock) {
+          opt.classList.add('unavailable');
+        } else {
+          opt.classList.add('available');
+          opt.dataset.qty = qty;
+          opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelectorAll('#qtyPanel .dropdown-opt.selected').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedQuantity = parseInt(this.dataset.qty);
+            selectedQtyText.textContent = `Số lượng: ${selectedQuantity}`;
+            qtyPanel.classList.remove('active');
+            updateActionButtons();
+          });
+        }
+        qtyPanel.appendChild(opt);
+      }
+    }
+
+    function disableQuantityDropdown() {
+      qtyDisplay.classList.add('disabled');
+      qtyPanel.innerHTML = '';
+      selectedQtyText.textContent = 'Chọn số lượng';
+      selectedQuantity = null;
+      qtyPanel.classList.remove('active');
+    }
+
+    function resetQuantity() {
+      document.querySelectorAll('#qtyPanel .dropdown-opt.selected').forEach(el => el.classList.remove('selected'));
+      selectedQtyText.textContent = 'Chọn số lượng';
+      selectedQuantity = null;
+    }
+
+    // Toggle qty panel
+    qtyDisplay.addEventListener('click', function(e) {
+      if (qtyDisplay.classList.contains('disabled')) return;
+      e.stopPropagation();
+      qtyPanel.classList.toggle('active');
+      sizePanel.classList.remove('active');
+    });
+
+    // Đóng panel khi click ngoài
+    document.addEventListener('click', function(e) {
+      if (!sizeDisplay.contains(e.target) && !sizePanel.contains(e.target)) {
+        sizePanel.classList.remove('active');
+      }
+      if (!qtyDisplay.contains(e.target) && !qtyPanel.contains(e.target)) {
+        qtyPanel.classList.remove('active');
+      }
+    });
+
+    // ========== ACTION BUTTONS ==========
+    function updateActionButtons() {
+      if (selectedSizeData && selectedQuantity) {
+        addToCartBtn.disabled = false;
+        checkoutBtn.disabled = false;
+      } else {
+        addToCartBtn.disabled = true;
+        checkoutBtn.disabled = true;
+      }
+    }
+
+    // ✅ Thêm vào giỏ hàng bằng fetch
+    addToCartBtn.addEventListener('click', async function() {
+      if (!selectedSizeData || !selectedQuantity) {
+        alert('Vui lòng chọn size và số lượng');
+        return;
+      }
+      try {
+        const response = await fetch('/cart/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug: window.productSlug,
+            sku: selectedSizeData.sku,
+            size: selectedSizeData.size,
+            quantity: selectedQuantity
+          })
+        });
+        const data = await response.json();
+        if (data.success) {
+          alert(data.message);
+          // Có thể cập nhật số lượng trên icon giỏ hàng sau này
+        } else {
+          alert(data.error || 'Có lỗi xảy ra');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Không thể kết nối đến máy chủ');
+      }
+    });
+
+    checkoutBtn.addEventListener('click', function() {
+      if (!selectedSizeData || !selectedQuantity) {
+        alert('Vui lòng chọn size và số lượng');
+        return;
+      }
+      // Có thể chuyển sang trang thanh toán hoặc thêm vào giỏ rồi redirect
+      alert('Chức năng thanh toán đang phát triển');
+    });
+
+    // ========== TOGGLE MÔ TẢ ==========
+    const descToggle = document.getElementById('descToggle');
+    const descContent = document.getElementById('descContent');
+    descToggle.addEventListener('click', function() {
+      if (descContent.style.display === 'none' || descContent.style.display === '') {
+        descContent.style.display = 'block';
+        descToggle.querySelector('span').textContent = '▲';
+      } else {
+        descContent.style.display = 'none';
+        descToggle.querySelector('span').textContent = '▼';
+      }
+    });
+
+    // Khởi tạo: disable qty dropdown ban đầu
+    disableQuantityDropdown();
+  })();
+</script>

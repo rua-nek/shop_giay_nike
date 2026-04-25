@@ -1,0 +1,128 @@
+{{! views/partials/product-card.hbs }}
+<div class="product-card">
+  <a href="/product/{{this.slug}}" class="product-link">
+    <div class="product-image">
+      <img
+        src="{{this.anh_chinh}}"
+        alt="{{this.ten_san_pham}}"
+        loading="lazy"
+      />
+    </div>
+    <div class="product-info">
+      <h3 class="product-name">{{this.ten_san_pham}}</h3>
+      <div class="product-price">
+        {{#if this.gia_khuyen_mai}}
+          <span class="original-price">{{formatCurrency this.gia_goc}}</span>
+          <span class="sale-price">{{formatCurrency this.gia_khuyen_mai}}</span>
+        {{else}}
+          <span class="current-price">{{formatCurrency this.gia_goc}}</span>
+        {{/if}}
+      </div>
+    </div>
+  </a>
+  {{! Nút Mua ngay nằm ngoài thẻ <a> để không bị ảnh hưởng link chi tiết }}
+  <div class="product-action">
+    <a href="/product/detail/{{this.slug}}" class="btn-buy-now">Mua ngay</a>
+  </div>
+</div>
+<style>
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    overflow: hidden;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    background: white;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    flex: 1;
+  }
+
+  .product-image img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .product-info {
+    padding: 16px 16px 8px;
+  }
+
+  .product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .product-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9rem;
+  }
+
+  .sale-price,
+  .current-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111;
+  }
+
+  .sale-price {
+    color: #d32f2f;
+  }
+
+  /* Nút Mua ngay */
+  .product-action {
+    padding: 0 16px 16px;
+    margin-top: auto;
+  }
+
+  .btn-buy-now {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #111;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid #111;
+  }
+
+  .btn-buy-now:hover {
+    background-color: #f15e2c;
+    border-color: #f15e2c;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+  }
+
+  .btn-buy-now:active {
+    transform: scale(0.98);
+  }
+</style>

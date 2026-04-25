@@ -1,4 +1,4 @@
-{{! views/login.hbs }}
+{{! views/page/user/login.hbs }}
 
 <html lang="vi">
   <head>
@@ -189,7 +189,26 @@
         gap: 10px;
       }
 
-      /* Icon đơn giản dùng Unicode / text fallback */
+      .success-message {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 0.8rem 1rem;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid #10b981;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .field-error {
+        color: #dc2626;
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        margin-left: 0.5rem;
+      }
+
       .icon-symbol {
         font-size: 1.2rem;
         line-height: 1;
@@ -206,18 +225,9 @@
       }
     </style>
   </head>
-  {{#if successMessage}}
-    <div
-      style="background: #d1fae5; color: #065f46; padding: 0.8rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center;"
-    >
-      ✅
-      {{successMessage}}
-    </div>
-  {{/if}}
   <body>
     <div class="login-card">
       <div class="logo">
-        <!-- Logo Nike đơn giản bằng SVG -->
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
@@ -234,6 +244,13 @@
       </div>
       <h1>Đăng nhập</h1>
       <div class="subhead">Chào mừng trở lại với Nike Store</div>
+
+      {{#if successMessage}}
+        <div class="success-message">
+          <span class="icon-symbol">✅</span>
+          <span>{{successMessage}}</span>
+        </div>
+      {{/if}}
 
       {{#if error}}
         <div class="error-message">
@@ -252,11 +269,14 @@
               id="email"
               name="email"
               placeholder="example@email.com"
-              value="{{oldEmail}}"
+              value="{{oldData.email}}"
               required
               autofocus
             />
           </div>
+          {{#if errors.email}}<div
+              class="field-error"
+            >{{errors.email}}</div>{{/if}}
         </div>
 
         <div class="form-group">
@@ -271,6 +291,9 @@
               required
             />
           </div>
+          {{#if errors.mat_khau}}<div
+              class="field-error"
+            >{{errors.mat_khau}}</div>{{/if}}
         </div>
 
         <div class="forgot-row">
@@ -289,11 +312,9 @@
       </form>
     </div>
 
-    {{! JavaScript nhỏ để tự động focus và giữ placeholder }}
     <script>
-      // Đảm bảo email được focus khi trang load window.onload = function() {
-      const emailInput = document.getElementById('email'); if (emailInput) {
-      emailInput.focus(); // Đưa con trỏ về cuối nếu có value cũ if
+      window.onload = function() { const emailInput =
+      document.getElementById('email'); if (emailInput) { emailInput.focus(); if
       (emailInput.value.length > 0) {
       emailInput.setSelectionRange(emailInput.value.length,
       emailInput.value.length); } } };

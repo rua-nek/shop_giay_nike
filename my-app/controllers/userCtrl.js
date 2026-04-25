@@ -38,6 +38,7 @@ class userCtrl {
           layout: false,
           errors,
           oldData,
+          error: "Vui lòng kiểm tra lại thông tin",
         });
       }
 
@@ -49,6 +50,7 @@ class userCtrl {
           layout: false,
           errors,
           oldData,
+          error: "Email không tồn tại",
         });
       }
 
@@ -60,18 +62,18 @@ class userCtrl {
           layout: false,
           errors,
           oldData,
+          error: "Mật khẩu không chính xác",
         });
       }
 
-      // ✅ LƯU SESSION - CHỈ LƯU NHỮNG THÔNG TIN CẦN THIẾT
+      // Đăng nhập thành công
       req.session.user = {
         id: user._id,
         ho_ten: user.ho_ten,
         email: user.email,
-        vai_tro: user.vai_tro, // "admin" hoặc "khach_hang"
+        vai_tro: user.vai_tro,
       };
 
-      // Chuyển hướng về trang chủ
       res.redirect("/");
     } catch (error) {
       console.error("Error logging in:", error);

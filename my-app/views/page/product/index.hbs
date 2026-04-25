@@ -1,0 +1,122 @@
+{{> header}}
+
+<div class="custom-container mt-4">
+  <div class="row">
+    <!-- Sidebar - 3 cột với sticky -->
+    <div class="col-lg-3 col-md-4 mb-4 sticky-sidebar">
+      {{> slidebar}}
+    </div>
+
+    <!-- Nội dung chính - 9 cột -->
+    <div class="col-lg-9 col-md-8">
+      <img src="https://i.pinimg.com/736x/b1/bc/3f/b1bc3ffcc62cdd7083a6cda984498b70.jpg" 
+     alt="Banner" 
+     class="banner-image">
+
+      <!-- Grid sản phẩm -->
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        {{#each products}}
+          <div class="col">
+            {{> product-card this}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> footer}}
+
+<style>
+  .custom-container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+  @media (max-width: 768px) {
+    .custom-container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+  .banner-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: top;    /* 🔥 Thêm dòng này để hiển thị phần trên của ảnh */
+  display: block;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* Sidebar sticky */
+  .sticky-sidebar {
+    position: sticky;
+    top: 20px;               /* Khoảng cách từ mép trên khi dính */
+    align-self: flex-start;  /* Quan trọng để sticky hoạt động trong flex container */
+    height: fit-content;     /* Chiều cao vừa nội dung */
+    z-index: 10;             /* Đảm bảo không bị che */
+  }
+
+  /* Product card styles giữ nguyên */
+  .product-card {
+    height: 100%;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  }
+  .product-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+  .product-info {
+    padding: 16px;
+  }
+  .product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .product-price {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9rem;
+  }
+  .sale-price, .current-price {
+    font-weight: 700;
+    color: #111;
+  }
+  .sale-price {
+    color: #d32f2f;
+  }
+
+  /* Đảm bảo footer không bị che */
+  footer {
+    margin-top: 4rem;
+    position: relative;
+    z-index: 20;
+    background: white;
+  }
+  
+</style>
